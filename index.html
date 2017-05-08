@@ -94,6 +94,12 @@
 			text-anchor: start;
 			font-size: 9px;
 		}
+		
+		.legendDescription{
+			fill: #949494;
+			text-anchor: start;
+			font-size: 9px;
+		}
 
 
 	  </style>
@@ -138,7 +144,7 @@ function adjacency() {
 
     queue()
     .defer(d3.csv, "nodelist_NS.csv")
-    .defer(d3.csv, "edgelist_NS.csv")
+    .defer(d3.csv, "edgelist_NS2.csv")
     .await(function(error, file1, file2) { createAdjacencyMatrix(file1, file2); });
     
     function createAdjacencyMatrix(nodes,edges) {
@@ -230,8 +236,8 @@ function adjacency() {
 		  .attr("height", 25)
 		  .attr("x", function (d) {return d.x * 25})
 		  .attr("y", function (d) {return d.y * 25})
-		  .style("stroke", "black")
-		  .style("stroke-width", "0px")
+		  .style("stroke", "gray")
+		  .style("stroke-width", "0.1px")
 		  .style("fill", function(d){
 				// console.log(d);
 				if (d.distance == 0 || d.distance ==null){
@@ -291,7 +297,7 @@ function adjacency() {
 	  
 	  
 		  function gridOver(d,i) {
-				d3.selectAll("rect.cell").style("stroke-width", function (p) {return p.x == d.x || p.y == d.y ? "1px" : "0px"})
+				d3.selectAll("rect.cell").style("stroke-width", function (p) {return p.x == d.x || p.y == d.y ? "1px" : "0.1px"})
 		
 				console.log(d.distance);
 				if(d.distance == 0){
@@ -371,7 +377,7 @@ function adjacency() {
 		var legendsvg =  d3.select("svg").append("g")
 			.attr("class", "legendWrapper");
 
-		legendsvg.attr("transform", "translate(130, 0)");
+		legendsvg.attr("transform", "translate(130, 10)");
 
 
 		//Draw the Rectangle
@@ -389,6 +395,33 @@ function adjacency() {
 			.attr("y", 45)
 			.style("text-anchor", "middle")
 			.text("Raupcrick");
+			
+		//Append description
+		var legendDescription = legendsvg.append("g");
+		
+		legendDescription
+			.append("text")
+			.attr("class", "legendDescription")
+			.attr("x", 10)
+			.attr("y", -2)
+			.style("text-anchor", "middle")
+			.text("Different");
+			
+		legendDescription
+			.append("text")
+			.attr("class", "legendDescription")
+			.attr("x", 150)
+			.attr("y", -2)
+			.style("text-anchor", "middle")
+			.text("similar");
+			
+		legendDescription
+			.append("text")
+			.attr("class", "legendDescription")
+			.attr("x", 286)
+			.attr("y", -2)
+			.style("text-anchor", "middle")
+			.text("Different");
 
 		//Set scale for x-axis
 		var xlegendScale = d3.scale.linear()
@@ -443,7 +476,7 @@ function adjacency() {
 		var legendsvg_d =  d3.select("svg").append("g")
 			.attr("class", "legendWrapper_d");
 
-		legendsvg_d.attr("transform", "translate(600, 0)");
+		legendsvg_d.attr("transform", "translate(600, 10)");
 
 
 		//Draw the Rectangle
